@@ -3,15 +3,21 @@
 功能：
 通过微信SDK实现微信支付功能
 
-一、链接AMap库
+一、链接WXPay库
+
 参考http://reactnative.cn/docs/0.28/linking-libraries-ios.html#content
 
 1、添加react-native-wxpay插件到你工程的node_modules文件夹下
+
 2、添加AMap库中的.xcodeproj文件在你的工程中
+
 3、点击你的主工程文件，选择Build Phases，然后把刚才所添加进去的.xcodeproj下的Products文件夹中的静态库文件（.a文件），拖到Link Binary With Libraries组内。
+
+4、由于AppDelegate中使用WXPay库,所以我们需要打开你的工程文件，选择Build Settings，然后搜索Header Search Paths，然后添加库所在的目录。
 
 
 二、开发环境配置
+
 参考
 https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=1417694084&token=&lang=zh_CN
 
@@ -48,6 +54,16 @@ https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_l
 
 四、简单使用
 
+1、重写AppDelegate的openURL方法：
+```
+#import "WXPay.h"
+
+- (BOOL)application:(UIApplication *)app openURL:(NSURL *)url options:(NSDictionary<NSString *,id> *)options
+{
+  return [[WXPay shareInstance] handleOpenURL: url];
+}
+```
+2、js文件
 ```
 //index.ios.js
 import React, { Component } from 'react';
