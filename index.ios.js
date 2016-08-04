@@ -28,7 +28,7 @@ import {
 } from 'react-native';
 
 class TextReactNative extends Component {
-  omponentDidMount() {
+  componentDidMount() {
 
         this.registerApp();
 
