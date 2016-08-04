@@ -64,11 +64,6 @@ class TextReactNative extends Component {
         });
     }
 
-    isWXAppSupportApi() {
-        WXPay.isWXAppSupportApi((res) => {
-            show('isWXAppSupportApi', res);
-        });
-    }
 
 
     wechatPay() {
