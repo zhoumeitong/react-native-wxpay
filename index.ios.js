@@ -37,6 +37,8 @@ class TextReactNative extends Component {
             (response) => {
                 if (parseInt(response.errCode) === 0) {
                     alert('支付成功');
+                }else if (parseInt(response.errCode) === -2){
+                    alert('用户取消');
                 } else {
                     alert(response.strMsg);
                 }
@@ -74,6 +76,8 @@ class TextReactNative extends Component {
             'nonceStr': '5K8264ILTKCH16CQ2502SI8ZNMTM67VS',
             'packageValue': 'Sign=WXPay',
             'sign': 'C380BEC2BFD727A4B6845133519F3AD6'
+        },(res) => {
+            
         });
     }
 

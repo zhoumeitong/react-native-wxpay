@@ -84,6 +84,14 @@ RCT_EXPORT_MODULE();
                 NSLog(@"支付成功－PaySuccess，retcode = %d", resp.errCode);
                 break;
                 
+            case WXErrCodeUserCancel:
+                errCode = [NSString stringWithFormat:@"%d",resp.errCode];
+                strMsg = @"支付结果：用户取消";
+                body[@"strMsg"] = strMsg;
+                body[@"errCode"] = errCode;
+                NSLog(@"用户取消－UserCancel，retcode = %d", resp.errCode);
+                break;
+                
             default:
                 errCode = [NSString stringWithFormat:@"%d",resp.errCode];
                 strMsg = [NSString stringWithFormat:@"支付结果：失败！retcode = %d, retstr = %@", resp.errCode,resp.errStr];
