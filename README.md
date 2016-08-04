@@ -117,11 +117,6 @@ class TextReactNative extends Component {
             show('isWXAppSupportApi', res);
         });
     }
-    isWXAppSupportApi() {
-        WXPay.isWXAppSupportApi((res) => {
-            show('isWXAppSupportApi', res);
-        });
-    }
     wechatPay() {
         WXPay.wechatPay({
             'timeStamp': '1412000000',
