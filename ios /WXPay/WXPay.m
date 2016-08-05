@@ -135,6 +135,13 @@ RCT_EXPORT_METHOD(isWXAppSupportApi:(RCTResponseSenderBlock)callback) {
     callback(@[@(res)]);
 }
 
+// 判断当前微信的版本是否支持该插件
+RCT_EXPORT_METHOD(isWXAppSupport:(RCTResponseSenderBlock)callback) {
+    BOOL res = [WXApi isWXAppSupportApi];
+    callback(@[@(res)]);
+}
+
+
 // 检测是否已安装微信
 RCT_EXPORT_METHOD(isWXAppInstalled:(RCTResponseSenderBlock)callback)
 {
@@ -172,15 +179,15 @@ RCT_EXPORT_METHOD(sendAuthReq:(NSString *)scope
 }
 
 
-RCT_EXPORT_METHOD(wechatPay:(NSDictionary *)dict
+RCT_EXPORT_METHOD(pay:(NSDictionary *)dict
                   :(RCTResponseSenderBlock)callback) {
-    NSMutableString *stamp  = [dict objectForKey:@"timeStamp"];
+    NSMutableString *stamp  = [dict objectForKey:@"timestamp"];
     PayReq* req = [[PayReq alloc] init];
-    req.partnerId = [dict objectForKey:@"partnerId"];
-    req.prepayId = [dict objectForKey:@"prepayId"];
-    req.nonceStr = [dict objectForKey:@"nonceStr"];
+    req.partnerId = [dict objectForKey:@"partnerid"];
+    req.prepayId = [dict objectForKey:@"prepayid"];
+    req.nonceStr = [dict objectForKey:@"noncestr"];
     req.timeStamp = stamp.intValue;
-    req.package = [dict objectForKey:@"packageValue"];
+    req.package = [dict objectForKey:@"package"];
     req.sign = [dict objectForKey:@"sign"];
     //日志输出
     NSLog(@"partid=%@\nprepayid=%@\nnoncestr=%@\ntimestamp=%ld\npackage=%@\nsign=%@",req.partnerId,req.prepayId,req.nonceStr,(long)req.timeStamp,req.package,req.sign );

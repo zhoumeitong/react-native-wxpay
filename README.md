@@ -120,12 +120,12 @@ class TextReactNative extends Component {
         });
     }
     wechatPay() {
-        WXPay.wechatPay({
-            'timeStamp': '1412000000',
-            'partnerId': '1900000109',
-            'prepayId': 'WX1217752501201407033233368018',
-            'nonceStr': '5K8264ILTKCH16CQ2502SI8ZNMTM67VS',
-            'packageValue': 'Sign=WXPay',
+        WXPay.pay({
+            'timestamp': '1412000000',
+            'partnerid': '1900000109',
+            'prepayid': 'WX1217752501201407033233368018',
+            'noncestr': '5K8264ILTKCH16CQ2502SI8ZNMTM67VS',
+            'package': 'Sign=WXPay',
             'sign': 'C380BEC2BFD727A4B6845133519F3AD6'
         },(res) => {
 
