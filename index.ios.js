@@ -9,7 +9,7 @@ import { NativeModules } from 'react-native';
 
 
 var WXPay = NativeModules.WXPay;
-let appid = 'wxd930ea5d5a258f4f';
+let appid = 'wx51b8febede7ca75b';
 
 function show(title, msg) {
     AlertIOS.alert(title+'', msg+'');
@@ -29,9 +29,7 @@ import {
 
 class TextReactNative extends Component {
   componentDidMount() {
-
         this.registerApp();
-
         NativeAppEventEmitter.addListener(
             'finishedPay',
             (response) => {
@@ -39,7 +37,7 @@ class TextReactNative extends Component {
                     alert('支付成功');
                 }else if (parseInt(response.errCode) === -2){
                     alert('用户取消');
-                } else {
+                }else {
                     alert(response.strMsg);
                 }
             }
@@ -67,15 +65,14 @@ class TextReactNative extends Component {
     }
 
 
-
     wechatPay() {
-        WXPay.wechatPay({
-            'timeStamp': '1412000000',
-            'partnerId': '1900000109',
-            'prepayId': 'WX1217752501201407033233368018',
-            'nonceStr': '5K8264ILTKCH16CQ2502SI8ZNMTM67VS',
-            'packageValue': 'Sign=WXPay',
-            'sign': 'C380BEC2BFD727A4B6845133519F3AD6'
+        WXPay.pay({
+            'timestamp': '1471493055',
+            'partnerid': '1224611601',
+            'prepayid': 'wx20160818120419369dce20100669024325',
+            'noncestr':'dc10e7a567a4c5e9e590c31da891b01d',
+            'package': 'Sign=WXPay',
+            'sign': '9A7F7DE306C90C92145A4A9F881BA8C0'
         },(res) => {
             
         });

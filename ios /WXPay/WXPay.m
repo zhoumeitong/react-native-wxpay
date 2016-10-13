@@ -10,6 +10,7 @@
 #import "RCTLog.h"
 #import "RCTEventDispatcher.h"
 
+static WXPay * instance = nil;
 
 @implementation WXPay
 
@@ -17,58 +18,41 @@
 //RCT_EXPORT_MODULE(WXPay);
 RCT_EXPORT_MODULE();
 
-
 @synthesize bridge = _bridge;
 
-- (instancetype)init {
-    if(self = [super init]) {
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleOpenURL:) name:@"RCTOpenURLNotification" object:nil];
++ (instancetype)shareInstance {
+    @synchronized(self) {
+        if (!instance) {
+            instance = [[self alloc] init];
+        }
     }
+    return instance;
+}
+
++ (instancetype)allocWithZone:(NSZone *)zone {
+    @synchronized(self) {
+        if (!instance) {
+            instance = [super allocWithZone:zone];
+        }
+    }
+    return instance;
+}
+
+- (instancetype)copyWithZone:(NSZone *)zone {
     return self;
 }
 
-- (void)dealloc
+// 处理微信通过URL启动App时传递的数据
+- (BOOL)handleOpenURL:(NSURL *)url
 {
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
-}
-
-- (BOOL)handleOpenURL:(NSNotification *)aNotification
-{
-    NSString * aURLString =  [aNotification userInfo][@"url"];
-    NSURL * aURL = [NSURL URLWithString:aURLString];
-    
-    if ([WXApi handleOpenURL:aURL delegate:self])
-    {
-        return YES;
-    } else {
-        return NO;
-    }
+    return [WXApi handleOpenURL:url delegate:instance];
 }
 
 
 // 发送一个sendReq后，收到微信的回应
 - (void)onResp:(BaseResp *)resp {
     
-    // 发送信息
-    if ([resp isKindOfClass:[SendMessageToWXResp class]]) {
-        SendMessageToWXResp *messageResp = (SendMessageToWXResp *)resp;
-        
-        NSDictionary *body = [[NSDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"%d", messageResp.errCode], @"errCode", nil];
-        
-        [self.bridge.eventDispatcher sendAppEventWithName:@"didRecvMessageResponse"
-                                                         body:body];
-        // 授权
-    } else if ([resp isKindOfClass:[SendAuthResp class]]) {
-        SendAuthResp *authResp = (SendAuthResp *)resp;
-        
-        NSDictionary *body = [[NSDictionary alloc] initWithObjectsAndKeys:
-                              authResp.code, @"code",
-                              authResp.state, @"state",
-                              [NSString stringWithFormat:@"%d", authResp.errCode], @"errCode", nil];
-        
-        [self.bridge.eventDispatcher sendAppEventWithName:@"didRecvAuthResponse"
-                                                         body:body];
-    }else if([resp isKindOfClass:[PayResp class]]){
+   if([resp isKindOfClass:[PayResp class]]){
         //支付返回结果，实际支付结果需要去微信服务器端查询
         NSString *strMsg = [NSString stringWithFormat:@"支付结果"];
         NSString *errCode = @"";
@@ -81,7 +65,7 @@ RCT_EXPORT_MODULE();
                 strMsg = @"支付结果：成功！";
                 body[@"strMsg"] = strMsg;
                 body[@"errCode"] = errCode;
-                NSLog(@"支付成功－PaySuccess，retcode = %d", resp.errCode);
+//                NSLog(@"支付成功－PaySuccess，retcode = %d", resp.errCode);
                 break;
                 
             case WXErrCodeUserCancel:
@@ -89,7 +73,7 @@ RCT_EXPORT_MODULE();
                 strMsg = @"支付结果：用户取消";
                 body[@"strMsg"] = strMsg;
                 body[@"errCode"] = errCode;
-                NSLog(@"用户取消－UserCancel，retcode = %d", resp.errCode);
+//                NSLog(@"用户取消－UserCancel，retcode = %d", resp.errCode);
                 break;
                 
             default:
@@ -97,10 +81,10 @@ RCT_EXPORT_MODULE();
                 strMsg = [NSString stringWithFormat:@"支付结果：失败！retcode = %d, retstr = %@", resp.errCode,resp.errStr];
                 body[@"strMsg"] = strMsg;
                 body[@"errCode"] = errCode;
-                NSLog(@"错误，retcode = %d, retstr = %@", resp.errCode,resp.errStr);
+//                NSLog(@"错误，retcode = %d, retstr = %@", resp.errCode,resp.errStr);
                 break;
         }
-        [self.bridge.eventDispatcher sendAppEventWithName:@"finishedPay"
+        [instance.bridge.eventDispatcher sendAppEventWithName:@"finishedPay"
                                                          body:body];
         
     }
@@ -190,7 +174,7 @@ RCT_EXPORT_METHOD(pay:(NSDictionary *)dict
     req.package = [dict objectForKey:@"package"];
     req.sign = [dict objectForKey:@"sign"];
     //日志输出
-    NSLog(@"partid=%@\nprepayid=%@\nnoncestr=%@\ntimestamp=%ld\npackage=%@\nsign=%@",req.partnerId,req.prepayId,req.nonceStr,(long)req.timeStamp,req.package,req.sign );
+//    NSLog(@"partid=%@\nprepayid=%@\nnoncestr=%@\ntimestamp=%ld\npackage=%@\nsign=%@",req.partnerId,req.prepayId,req.nonceStr,(long)req.timeStamp,req.package,req.sign );
     BOOL res = [WXApi sendReq:req];
     callback(@[@(res)]);
 }

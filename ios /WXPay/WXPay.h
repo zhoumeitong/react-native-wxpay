@@ -13,4 +13,8 @@
 
 @interface WXPay : NSObject <RCTBridgeModule,WXApiDelegate>
 
++(instancetype)shareInstance;
+
+- (BOOL) handleOpenURL:(NSURL *)url;
+
 @end
