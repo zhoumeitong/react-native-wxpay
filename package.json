@@ -1,0 +1,6 @@
+{
+  "name": "react-native-wxpay",
+  "version": "0.0.1",
+  "description": " wxpay For React Native",
+  "main": "index.js"
+}

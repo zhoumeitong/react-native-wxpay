@@ -5,10 +5,10 @@
  */
 
 import React, { Component } from 'react';
-import { NativeModules } from 'react-native';
+// import { NativeModules } from 'react-native';
+// var WXPay = NativeModules.WXPay;
+import WXPay from 'react-native-wxpay';
 
-
-var WXPay = NativeModules.WXPay;
 let appid = 'wx51b8febede7ca75b';
 
 function show(title, msg) {

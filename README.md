@@ -67,9 +67,10 @@ https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_l
 ```
 //index.ios.js
 import React, { Component } from 'react';
-import { NativeModules } from 'react-native';
+// import { NativeModules } from 'react-native';
+// var WXPay = NativeModules.WXPay;
+import WXPay from 'react-native-wxpay';
 
-var WXPay = NativeModules.WXPay;
 let appid = 'wxd930ea5d5a258f4f';
 
 function show(title, msg) {
