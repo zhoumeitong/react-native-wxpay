@@ -1,7 +1,7 @@
 # react-native-wxpay
 
 ### 功能：
-通过微信SDK实现微信支付功能
+通过微信SDK(v1.8.2)实现微信支付功能
 
 ### 使用步骤：
 
@@ -33,29 +33,36 @@ react-native link
 参考：https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=1417694084&token=&lang=zh_CN
 
 1、引入系统库
-左侧目录中选中工程名，在TARGETS->Build Phases-> Link Binary With Libaries中点击“+”按钮，在弹出的窗口中查找并选择所需的库（见下图红框内的库），单击“Add”按钮，将库文件添加到工程中。
+左侧目录中选中工程名，在TARGETS->Build Phases-> Link Binary With Libaries中点击“+”按钮，在弹出的窗口中查找并选择如下所需的库，单击“Add”按钮，将库文件添加到工程中。
 
-![](http://upload-images.jianshu.io/upload_images/2093433-19d43eb8324a359b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+- SystemConfiguration.framework
+- libz.dylib
+- libsqlite3.0.dylib
+- libc++.dylib
+- Security.framework
+- CoreTelephony.framework
+- CFNetwork.framework
+
+如图所示：
+
+![](http://upload-images.jianshu.io/upload_images/2093433-56088c5af2abdec5.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
 
 2、环境配置
 在Xcode中，选择你的工程设置项，选中“TARGETS”一栏，在“info”标签栏的“URL type“添加“URL scheme”为你所注册的应用程序id
 
 ![](http://upload-images.jianshu.io/upload_images/2093433-3693b1bff95bf928.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
+在工程文件中选择Build Setting，在"Other Linker Flags"中加入"-Objc -all_load"
+
+![](http://upload-images.jianshu.io/upload_images/2093433-8f42a230dcc58456.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
+
 #### 三、配置plist文件
 
-![](http://upload-images.jianshu.io/upload_images/2093433-68018905c5bf8acf.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![](http://upload-images.jianshu.io/upload_images/2093433-2d1868511e3a3ee4.jpeg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
-1、iOS9为了增强数据访问安全，将所有的http请求都改为了https，为了能够在iOS9中正常使用地图SDK，请在"Info.plist"中进行如下配置，否则影响SDK的使用。
-```
-<key>NSAppTransportSecurity</key>
-<dict>
-<key>NSAllowsArbitraryLoads</key>
-<true/>
-</dict>
-
-```
-2、在iOS9中为了能正常调起微信支付的功能，必须在"Info.plist"中将微信的URL scheme列为白名单，否则无法调起，配置如下：
+在iOS9中为了能正常调起微信支付的功能，必须在"Info.plist"中将微信的URL scheme列为白名单，否则无法调起，配置如下：
 ```
 <key>LSApplicationQueriesSchemes</key>
 <array>
@@ -113,7 +120,7 @@ function show(title, msg) {
 AlertIOS.alert(title+'', msg+'');
 }
 
-class TextReactNative extends Component {
+export default class TextReactNative extends Component {
 componentDidMount() {
 this.registerApp();
 NativeAppEventEmitter.addListener(
@@ -215,8 +222,5 @@ color: '#fff'
 }
 
 });
-
-AppRegistry.registerComponent('TextReactNative', () => TextReactNative);
-
 ```
 

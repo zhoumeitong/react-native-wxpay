@@ -105,13 +105,6 @@ RCT_EXPORT_METHOD(registerApp:(NSString *)appid
     callback(@[@(res)]);
 }
 
-// 向微信终端程序注册第三方应用，带描述
-RCT_EXPORT_METHOD(registerAppWithDesc:(NSString *)appid
-                  :(NSString *)appdesc
-                  :(RCTResponseSenderBlock)callback) {
-    BOOL res = [WXApi registerApp:appid withDescription:appdesc];
-    callback(@[@(res)]);
-}
 
 // 判断当前微信的版本是否支持OpenApi
 RCT_EXPORT_METHOD(isWXAppSupportApi:(RCTResponseSenderBlock)callback) {

@@ -66,14 +66,14 @@
 		D4A985171D3C878E001407AB /* WXPay */ = {
 			isa = PBXGroup;
 			children = (
-				D4A985541D3CA2C3001407AB /* WXSDK */,
+				D4A985541D3CA2C3001407AB /* WechatSDK1.8.2 */,
 				D4A985181D3C878E001407AB /* WXPay.h */,
 				D4A9851A1D3C878E001407AB /* WXPay.m */,
 			);
 			path = WXPay;
 			sourceTree = "<group>";
 		};
-		D4A985541D3CA2C3001407AB /* WXSDK */ = {
+		D4A985541D3CA2C3001407AB /* WechatSDK1.8.2 */ = {
 			isa = PBXGroup;
 			children = (
 				D4A985551D3CA2EE001407AB /* libWeChatSDK.a */,
@@ -81,7 +81,7 @@
 				D4A985571D3CA2EE001407AB /* WXApi.h */,
 				D4A985581D3CA2EE001407AB /* WXApiObject.h */,
 			);
-			name = WXSDK;
+			name = WechatSDK1.8.2;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
