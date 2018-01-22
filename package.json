@@ -1,6 +1,23 @@
 {
   "name": "react-native-wxpay",
-  "version": "0.0.1",
-  "description": " wxpay For React Native",
-  "main": "index.js"
+  "version": "1.0.0",
+  "description": " WeChat pay For React Native ios",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zhoumeitong/react-native-wxpay.git"
+  },
+  "keywords": [
+    "WeChat",
+    "pay"
+  ],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/zhoumeitong/react-native-wxpay/issues"
+  },
+  "homepage": "https://github.com/zhoumeitong/react-native-wxpay#readme"
 }
