@@ -12,7 +12,7 @@
 ##### 手动添加：
 1、添加react-native-wxpay插件到你工程的node_modules文件夹下
 
-2、添加AMap库中的.xcodeproj文件在你的工程中
+2、添加WXPay库中的.xcodeproj文件在你的工程中
 
 3、点击你的主工程文件，选择Build Phases，然后把刚才所添加进去的.xcodeproj下的Products文件夹中的静态库文件（.a文件），拖到Link Binary With Libraries组内。
 
