@@ -108,22 +108,31 @@ RCT_EXPORT_METHOD(registerApp:(NSString *)appid
 
 // 判断当前微信的版本是否支持OpenApi
 RCT_EXPORT_METHOD(isWXAppSupportApi:(RCTResponseSenderBlock)callback) {
-    BOOL res = [WXApi isWXAppSupportApi];
-    callback(@[@(res)]);
+    // 回到主线程
+    dispatch_async(dispatch_get_main_queue(), ^{
+        BOOL res = [WXApi isWXAppSupportApi];
+        callback(@[@(res)]);
+    });
 }
 
 // 判断当前微信的版本是否支持该插件
 RCT_EXPORT_METHOD(isWXAppSupport:(RCTResponseSenderBlock)callback) {
-    BOOL res = [WXApi isWXAppSupportApi];
-    callback(@[@(res)]);
+    // 回到主线程
+    dispatch_async(dispatch_get_main_queue(), ^{
+        BOOL res = [WXApi isWXAppSupportApi];
+        callback(@[@(res)]);
+    });
 }
 
 
 // 检测是否已安装微信
 RCT_EXPORT_METHOD(isWXAppInstalled:(RCTResponseSenderBlock)callback)
 {
-    BOOL res = [WXApi isWXAppInstalled];
-    callback(@[@(res)]);
+    // 回到主线程
+    dispatch_async(dispatch_get_main_queue(), ^{
+        BOOL res = [WXApi isWXAppInstalled];
+        callback(@[@(res)]);
+    });
 }
 
 // 获取当前微信SDK的版本号
@@ -140,8 +149,11 @@ RCT_EXPORT_METHOD(getWXAppInstallUrl:(RCTResponseSenderBlock)callback) {
 
 // 打开微信
 RCT_EXPORT_METHOD(openWXApp:(RCTResponseSenderBlock)callback) {
-    BOOL res = [WXApi openWXApp];
-    callback(@[@(res)]);
+    // 回到主线程
+    dispatch_async(dispatch_get_main_queue(), ^{
+        BOOL res = [WXApi openWXApp];
+        callback(@[@(res)]);
+    });
 }
 
 // 发起认证请求
@@ -168,7 +180,10 @@ RCT_EXPORT_METHOD(pay:(NSDictionary *)dict
     req.sign = [dict objectForKey:@"sign"];
     //日志输出
 //    NSLog(@"partid=%@\nprepayid=%@\nnoncestr=%@\ntimestamp=%ld\npackage=%@\nsign=%@",req.partnerId,req.prepayId,req.nonceStr,(long)req.timeStamp,req.package,req.sign );
-    BOOL res = [WXApi sendReq:req];
-    callback(@[@(res)]);
+    // 回到主线程
+    dispatch_async(dispatch_get_main_queue(), ^{
+        BOOL res = [WXApi sendReq:req];
+        callback(@[@(res)]);
+    });
 }
 @end

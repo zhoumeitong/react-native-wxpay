@@ -1,7 +1,8 @@
 # react-native-wxpay
 
 ### 功能：
-通过微信SDK(v1.8.2)实现微信支付功能
+
+通过微信SDK(v1.8.2)实现微信支付功能
 
 ### 使用步骤：
 
@@ -10,30 +11,33 @@
 参考：https://reactnative.cn/docs/0.50/linking-libraries-ios.html#content
 
 ##### 手动添加：
-1、添加react-native-wxpay插件到你工程的node_modules文件夹下
 
-2、添加WXPay库中的.xcodeproj文件在你的工程中
+1、添加`react-native-wxpay`插件到你工程的`node_modules`文件夹下
 
-3、点击你的主工程文件，选择Build Phases，然后把刚才所添加进去的.xcodeproj下的Products文件夹中的静态库文件（.a文件），拖到Link Binary With Libraries组内。
+2、添加`WXPay`库中的`.xcodeproj`文件在你的工程中
+
+3、点击你的主工程文件，选择`Build Phases`，然后把刚才所添加进去的`.xcodeproj`下的`Products`文件夹中的静态库文件（.a文件），拖到`Link Binary With Libraries`组内。
 
 ##### 自动添加：
+
 ```
-npm install react-native-wxpay --save
+npm install react-native-wxpay --save 
 或
 yarn add react-native-wxpay
 
 react-native link
 ```
 
-由于AppDelegate中使用WXPay库，所以我们需要打开你的工程文件，选择Build Settings，然后搜索Header Search Paths，然后添加库所在的目录 `$(SRCROOT)/../node_modules/react-native-wxpay/ios/WXPay`
+由于`AppDelegate中`使用`WXPay`库，所以我们需要打开你的工程文件，选择`Build Settings`，然后搜索`Header Search Paths`，然后添加库所在的目录 `$(SRCROOT)/../node_modules/react-native-wxpay/ios/WXPay`
 
 
 #### 二、开发环境配置
 
 参考：https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=1417694084&token=&lang=zh_CN
 
-1、引入系统库
-左侧目录中选中工程名，在TARGETS->Build Phases-> Link Binary With Libaries中点击“+”按钮，在弹出的窗口中查找并选择如下所需的库，单击“Add”按钮，将库文件添加到工程中。
+##### 1、引入系统库
+
+左侧目录中选中工程名，在`TARGETS->Build Phases-> Link Binary With Libaries`中点击`“+”`按钮，在弹出的窗口中查找并选择如下所需的库，单击`“Add”`按钮，将库文件添加到工程中。
 
 - SystemConfiguration.framework
 - libz.dylib
@@ -48,12 +52,13 @@ react-native link
 ![](http://upload-images.jianshu.io/upload_images/2093433-56088c5af2abdec5.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
 
-2、环境配置
-在Xcode中，选择你的工程设置项，选中“TARGETS”一栏，在“info”标签栏的“URL type“添加“URL scheme”为你所注册的应用程序id
+##### 2、环境配置
+
+在`Xcode`中，选择你的工程设置项，选中`“TARGETS”`一栏，在`“info”`标签栏的`“URL type”`添加`“URL scheme”`为你所注册的应用程序`id`
 
 ![](http://upload-images.jianshu.io/upload_images/2093433-3693b1bff95bf928.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
-在工程文件中选择Build Setting，在"Other Linker Flags"中加入"-Objc -all_load"
+在工程文件中选择`Build Setting`，在`"Other Linker Flags"`中加入`"-Objc -all_load"`
 
 ![](http://upload-images.jianshu.io/upload_images/2093433-8f42a230dcc58456.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
@@ -62,17 +67,33 @@ react-native link
 
 ![](http://upload-images.jianshu.io/upload_images/2093433-2d1868511e3a3ee4.jpeg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
-在iOS9中为了能正常调起微信支付的功能，必须在"Info.plist"中将微信的URL scheme列为白名单，否则无法调起，配置如下：
+在`iOS9`中为了能正常调起微信支付的功能，必须在`"Info.plist"`中将微信的`URL scheme`列为白名单，否则无法调起，配置如下：
 ```
 <key>LSApplicationQueriesSchemes</key>
 <array>
-<string>weixin</string>
+<string>weixin</string>
 </array>
 ```
 
 #### 四、简单使用
 
-1、重写AppDelegate的openURL方法：
+##### 方法
+
+Event Name | Returns | Notes 
+------ | ---- | -------
+registerApp | res | 向微信终端程序注册第三方应用
+isWXAppSupportApi | res | 判断当前微信的版本是否支持OpenApi
+isWXAppSupport | res | 判断当前微信的版本是否支持该插件
+isWXAppInstalled | res | 检测是否已安装微信
+getApiVersion | res | 获取当前微信SDK的版本号
+getWXAppInstallUrl | res | 获取微信的itunes安装地址
+openWXApp | res | 打开微信
+sendAuthReq | res | 发起认证请求
+pay | res | 支付
+finishedPay | res | 支付结果监听事件
+
+##### 1、重写AppDelegate的openURL方法：
+
 ```
 #import "WXPay.h"
 
@@ -96,7 +117,9 @@ return NO;
 }
 }
 ```
-2、js文件
+
+##### 2、js文件
+
 ```
 //index.ios.js
 import React, { Component } from 'react';
@@ -169,25 +192,25 @@ return (
 
 <Text style={styles.pageTitle}>WeChat SDK for React Native (iOS)</Text>
 
-<TouchableHighlight
+<TouchableHighlight 
 style={styles.button} underlayColor="#f38"
 onPress={this.registerApp}>
 <Text style={styles.buttonTitle}>registerApp</Text>
 </TouchableHighlight>
 
-<TouchableHighlight
+<TouchableHighlight 
 style={styles.button} underlayColor="#f38"
 onPress={this.isWXAppInstalled}>
 <Text style={styles.buttonTitle}>isWXAppInstalled</Text>
 </TouchableHighlight>
 
-<TouchableHighlight
+<TouchableHighlight 
 style={styles.button} underlayColor="#f38"
 onPress={this.isWXAppSupportApi}>
 <Text style={styles.buttonTitle}>isWXAppSupportApi</Text>
 </TouchableHighlight>
 
-<TouchableHighlight
+<TouchableHighlight 
 style={styles.button} underlayColor="#f38"
 onPress={this.wechatPay}>
 <Text style={styles.buttonTitle}>wechatPay</Text>
